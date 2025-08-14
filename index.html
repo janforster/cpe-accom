@@ -26,12 +26,8 @@
       position: relative; color: #fff; text-align: center;
       padding: 7rem 1rem 5rem;
     }
-    header::after {
-      content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.35);
-    }
-    header .inner {
-      position: relative; z-index: 1; max-width: 1000px; margin: 0 auto;
-    }
+    header::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.35); }
+    header .inner { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; }
     header h1 { margin: 0 0 .75rem; font-size: clamp(2rem, 4vw, 3rem); }
     header p  { margin: 0; font-size: clamp(1rem, 2.2vw, 1.2rem); opacity: .95; }
 
@@ -56,48 +52,58 @@
     ul { padding-left: 1.25rem; margin: 0; }
     li { margin-bottom: .5rem; }
 
-    /* Carousel (CSS scroll-snap) */
-    .carousel {
-      position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--soft-shadow);
-    }
+    /* Carousel (scroll-snap, no JS) */
+    .carousel { position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--soft-shadow); }
     .track {
       display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch; gap: 0;
     }
-    .slide {
-      scroll-snap-align: center; flex: 0 0 100%; position: relative;
-      max-height: 65vh; display: flex; align-items: center; justify-content: center;
-      background: #000;
-    }
-    .slide img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
-    .carousel-hint {
-      text-align: center; font-size: .9rem; color: #666; margin-top: .5rem;
-    }
+    .slide { scroll-snap-align: center; flex: 0 0 100%; max-height: 65vh; background:#000; display:flex; align-items:center; justify-content:center; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-hint { text-align: center; font-size: .9rem; color: #666; margin-top: .5rem; }
 
-    /* Thumb grid */
+    /* Thumbs */
     .thumbs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: .75rem; margin-top: 1rem;
     }
-    .thumbs a {
-      display: block; border-radius: 10px; overflow: hidden; box-shadow: var(--soft-shadow);
-      border: 1px solid #eef2f6;
-    }
-    .thumbs img {
-      width: 100%; height: 120px; object-fit: cover; display: block; transition: transform .25s ease;
-    }
+    .thumbs a { display: block; border-radius: 10px; overflow: hidden; box-shadow: var(--soft-shadow); border: 1px solid #eef2f6; }
+    .thumbs img { width: 100%; height: 120px; object-fit: cover; display: block; transition: transform .25s ease; }
     .thumbs a:hover img { transform: scale(1.03); }
 
-    /* Footer */
-    footer {
-      text-align: center; font-size: .9rem; color: #888;
-      padding: 2rem 1rem; background: #e9eef3; margin-top: 2rem;
+    /* Lightbox (CSS :target) */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,.7);
+      display: none; align-items: center; justify-content: center;
+      padding: 2rem; z-index: 1000;
+    }
+    .lightbox:target { display: flex; }
+    .lightbox .content {
+      position: relative; max-width: min(92vw, 1000px); max-height: 88vh;
+      background: #000; border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,.4);
+      overflow: hidden;
+    }
+    .lightbox img {
+      display: block; width: 100%; height: 100%; object-fit: contain; background: #000;
+    }
+    .lightbox a.lb-bg {
+      position: fixed; inset: 0; display: block; /* clicking backdrop closes */
+    }
+    .lightbox .close {
+      position: absolute; top: .5rem; right: .5rem; background: rgba(255,255,255,.85);
+      color: #222; text-decoration: none; border-radius: 999px; width: 36px; height: 36px;
+      display: grid; place-items: center; font-weight: 700; font-size: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    }
+    .lightbox .caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      color: #fff; background: linear-gradient(to top, rgba(0,0,0,.6), transparent);
+      padding: .75rem 1rem; font-size: .95rem;
     }
 
-    /* Small screens */
+    /* Footer */
+    footer { text-align: center; font-size: .9rem; color: #888; padding: 2rem 1rem; background: #e9eef3; margin-top: 2rem; }
+
     @media (max-width: 600px) {
       section { margin: 1rem; padding: 1.25rem; }
     }
@@ -117,6 +123,7 @@
     <a href="#photos">Photos</a>
     <a href="#pricing">Pricing</a>
     <a href="#location">Location</a>
+    <a href="#updates">Updates</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -143,85 +150,55 @@
     <h2>Photos</h2>
 
     <!-- Carousel -->
-    <div class="carousel">
+    <div class="carousel" aria-label="Image carousel (swipe/drag)">
       <div class="track">
-        <figure class="slide">
-          <img src="./img/living_01.jpg" alt="Living room – cosy seating area">
-        </figure>
-        <figure class="slide">
-          <img src="./img/living_02.jpg" alt="Living room – bright open plan">
-        </figure>
-        <figure class="slide">
-          <img src="./img/living_03.jpg" alt="Living room – view to dining">
-        </figure>
-        <figure class="slide">
-          <img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped">
-        </figure>
-        <figure class="slide">
-          <img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter">
-        </figure>
-        <figure class="slide">
-          <img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup">
-        </figure>
-        <figure class="slide">
-          <img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area">
-        </figure>
-        <figure class="slide">
-          <img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin">
-        </figure>
-        <figure class="slide">
-          <img src="./img/toilet_01.jpg" alt="Separate toilet">
-        </figure>
-        <figure class="slide">
-          <img src="./img/hallway_01.jpg" alt="Hallway – upstairs">
-        </figure>
-        <figure class="slide">
-          <img src="./img/roof_01.jpg" alt="Roof access – current view">
-        </figure>
-        <figure class="slide">
-          <img src="./img/detail_01.jpg" alt="Detail – interior touch">
-        </figure>
-        <figure class="slide">
-          <img src="./img/detail_02.jpg" alt="Detail – decor">
-        </figure>
-        <figure class="slide">
-          <img src="./img/detail_03.jpg" alt="Detail – furnishing">
-        </figure>
-        <figure class="slide">
-          <img src="./img/floor_plan.png" alt="Floor plan – layout overview">
-        </figure>
+        <figure class="slide"><img src="./img/living_01.jpg" alt="Living room – cosy seating area"></figure>
+        <figure class="slide"><img src="./img/living_02.jpg" alt="Living room – bright open plan"></figure>
+        <figure class="slide"><img src="./img/living_03.jpg" alt="Living room – view to dining"></figure>
+        <figure class="slide"><img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped"></figure>
+        <figure class="slide"><img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter"></figure>
+        <figure class="slide"><img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup"></figure>
+        <figure class="slide"><img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area"></figure>
+        <figure class="slide"><img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin"></figure>
+        <figure class="slide"><img src="./img/toilet_01.jpg" alt="Separate toilet"></figure>
+        <figure class="slide"><img src="./img/hallway_01.jpg" alt="Hallway – upstairs"></figure>
+        <figure class="slide"><img src="./img/roof_01.jpg" alt="Roof access – current view"></figure>
+        <figure class="slide"><img src="./img/detail_01.jpg" alt="Detail – interior touch"></figure>
+        <figure class="slide"><img src="./img/detail_02.jpg" alt="Detail – decor"></figure>
+        <figure class="slide"><img src="./img/detail_03.jpg" alt="Detail – furnishing"></figure>
+        <figure class="slide"><img src="./img/floor_plan.png" alt="Floor plan – layout overview"></figure>
       </div>
     </div>
     <p class="carousel-hint">Tip: swipe/drag horizontally to browse</p>
 
-    <!-- Thumbnails -->
+    <!-- Thumbnails (click to open lightbox modal) -->
     <div class="thumbs" aria-label="Photo thumbnails">
-      <a href="#photos"><img src="./img/living_01.jpg" alt="Living room thumbnail"></a>
-      <a href="#photos"><img src="./img/living_02.jpg" alt="Living room thumbnail"></a>
-      <a href="#photos"><img src="./img/living_03.jpg" alt="Living room thumbnail"></a>
-      <a href="#photos"><img src="./img/kitchen_01.jpg" alt="Kitchen thumbnail"></a>
-      <a href="#photos"><img src="./img/kitchen_02.jpg" alt="Kitchen thumbnail"></a>
-      <a href="#photos"><img src="./img/bedroom_01.jpg" alt="Bedroom thumbnail"></a>
-      <a href="#photos"><img src="./img/room_01.jpg" alt="Pass-through room thumbnail"></a>
-      <a href="#photos"><img src="./img/bathroom_01.jpg" alt="Bathroom thumbnail"></a>
-      <a href="#photos"><img src="./img/toilet_01.jpg" alt="Toilet thumbnail"></a>
-      <a href="#photos"><img src="./img/hallway_01.jpg" alt="Hallway thumbnail"></a>
-      <a href="#photos"><img src="./img/roof_01.jpg" alt="Roof thumbnail"></a>
-      <a href="#photos"><img src="./img/detail_01.jpg" alt="Detail thumbnail"></a>
-      <a href="#photos"><img src="./img/detail_02.jpg" alt="Detail thumbnail"></a>
-      <a href="#photos"><img src="./img/detail_03.jpg" alt="Detail thumbnail"></a>
-      <a href="#photos"><img src="./img/floor_plan.png" alt="Floor plan thumbnail"></a>
+      <a href="#lb-living01"><img src="./img/living_01.jpg" alt="Living room thumbnail"></a>
+      <a href="#lb-living02"><img src="./img/living_02.jpg" alt="Living room thumbnail"></a>
+      <a href="#lb-living03"><img src="./img/living_03.jpg" alt="Living room thumbnail"></a>
+      <a href="#lb-kitchen01"><img src="./img/kitchen_01.jpg" alt="Kitchen thumbnail"></a>
+      <a href="#lb-kitchen02"><img src="./img/kitchen_02.jpg" alt="Kitchen thumbnail"></a>
+      <a href="#lb-bedroom01"><img src="./img/bedroom_01.jpg" alt="Bedroom thumbnail"></a>
+      <a href="#lb-room01"><img src="./img/room_01.jpg" alt="Pass-through room thumbnail"></a>
+      <a href="#lb-bathroom01"><img src="./img/bathroom_01.jpg" alt="Bathroom thumbnail"></a>
+      <a href="#lb-toilet01"><img src="./img/toilet_01.jpg" alt="Toilet thumbnail"></a>
+      <a href="#lb-hallway01"><img src="./img/hallway_01.jpg" alt="Hallway thumbnail"></a>
+      <a href="#lb-roof01"><img src="./img/roof_01.jpg" alt="Roof thumbnail"></a>
+      <a href="#lb-detail01"><img src="./img/detail_01.jpg" alt="Detail thumbnail"></a>
+      <a href="#lb-detail02"><img src="./img/detail_02.jpg" alt="Detail thumbnail"></a>
+      <a href="#lb-detail03"><img src="./img/detail_03.jpg" alt="Detail thumbnail"></a>
+      <a href="#lb-floorplan"><img src="./img/floor_plan.png" alt="Floor plan thumbnail"></a>
     </div>
   </section>
 
   <section id="pricing">
     <h2>Pricing & Stay Conditions</h2>
     <ul>
-      <li>Base nightly rate: Rs 1,700–1,900</li>
-      <li>Weekly: Rs 11,000–12,000</li>
-      <li>Fortnight: Rs 20,000–21,000</li>
-      <li>Monthly: Rs 30,000–32,000 (utilities included) or Rs 26,000–28,000 (+ utilities)</li>
-      <li>Minimum stay: from 5–7 nights (long stays preferred)</li>
+      <li>Base nightly rate: Rs 2,000</li>
+      <li>Weekly: Rs 12,000</li>
+      <li>Fortnight: Rs 18,000</li>
+      <li>Monthly: Rs 25,000 (utilities included)</li>
+      <li>Minimum stay: from 5 nights (long stays preferred)</li>
       <li>Cleaning fee applies; cleaning before/after stays (mid-stay on request)</li>
       <li>Check-in from 14:00; check-out by 10:00</li>
     </ul>
@@ -229,20 +206,26 @@
 
   <section id="location">
     <h2>Location</h2>
-    <p><strong>Address:</strong> 32 Frederick Bonnefin Street, Forest-Side, Curepipe, Mauritius</p>
+    <p><strong>Address:</strong> Frederick Bonnefin Street, Forest-Side, Curepipe, Mauritius</p>
     <p>Nearby attractions include:</p>
     <ul>
-      <li>Trou aux Cerfs (5 minutes)</li>
+      <li>Trou aux Cerfs</li>
       <li>Curepipe Botanical Garden</li>
       <li>Domaine des Aubineaux</li>
-      <li>Winners and Intermart supermarkets</li>
+      <li>Winners supermarket</li>
     </ul>
+  </section>
+
+  <section id="updates">
+    <h2>Updates</h2>
+    <p>Preparation of the space is ongoing.</p>
+    <p>Rental planned to start availability from Janury 2026</p>
   </section>
 
   <section id="contact">
     <h2>Contact & Booking</h2>
     <p>To check availability and book your stay, please contact:</p>
-    <p><strong>Honza Förster</strong><br />
+    <p><strong>Name</strong><br />
     Email: yourname@example.com<br />
     Phone/WhatsApp: +230 XXX XXX XXX</p>
     <p>Or book via Airbnb – link coming soon!</p>
@@ -251,5 +234,141 @@
   <footer>
     <p>&copy; 2025 Townhouse Curepipe. All rights reserved.</p>
   </footer>
+
+  <!-- LIGHTBOX MODALS (no JS; open via :target) -->
+  <div id="lb-living01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos" aria-label="Close"></a>
+    <div class="content">
+      <a class="close" href="#photos" aria-label="Close">×</a>
+      <img src="./img/living_01.jpg" alt="Living room – cosy seating area full view">
+      <div class="caption">Living room – cosy seating area</div>
+    </div>
+  </div>
+
+  <div id="lb-living02" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/living_02.jpg" alt="Living room – bright open plan full view">
+      <div class="caption">Living room – bright open plan</div>
+    </div>
+  </div>
+
+  <div id="lb-living03" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/living_03.jpg" alt="Living room – view to dining full view">
+      <div class="caption">Living room – view to dining</div>
+    </div>
+  </div>
+
+  <div id="lb-kitchen01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped full view">
+      <div class="caption">Kitchen – fully equipped</div>
+    </div>
+  </div>
+
+  <div id="lb-kitchen02" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter full view">
+      <div class="caption">Kitchen – appliances and counter</div>
+    </div>
+  </div>
+
+  <div id="lb-bedroom01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup full view">
+      <div class="caption">Main bedroom – sleeping setup</div>
+    </div>
+  </div>
+
+  <div id="lb-room01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area full view">
+      <div class="caption">Pass-through room – additional sleeping area</div>
+    </div>
+  </div>
+
+  <div id="lb-bathroom01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin full view">
+      <div class="caption">Bathroom – shower and basin</div>
+    </div>
+  </div>
+
+  <div id="lb-toilet01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/toilet_01.jpg" alt="Separate toilet full view">
+      <div class="caption">Separate toilet</div>
+    </div>
+  </div>
+
+  <div id="lb-hallway01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/hallway_01.jpg" alt="Hallway – upstairs full view">
+      <div class="caption">Hallway – upstairs</div>
+    </div>
+  </div>
+
+  <div id="lb-roof01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/roof_01.jpg" alt="Roof access – current view full view">
+      <div class="caption">Roof access – current view</div>
+    </div>
+  </div>
+
+  <div id="lb-detail01" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/detail_01.jpg" alt="Detail – interior touch full view">
+      <div class="caption">Detail – interior touch</div>
+    </div>
+  </div>
+
+  <div id="lb-detail02" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/detail_02.jpg" alt="Detail – decor full view">
+      <div class="caption">Detail – decor</div>
+    </div>
+  </div>
+
+  <div id="lb-detail03" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/detail_03.jpg" alt="Detail – furnishing full view">
+      <div class="caption">Detail – furnishing</div>
+    </div>
+  </div>
+
+  <div id="lb-floorplan" class="lightbox" aria-hidden="true">
+    <a class="lb-bg" href="#photos"></a>
+    <div class="content">
+      <a class="close" href="#photos">×</a>
+      <img src="./img/floor_plan.png" alt="Floor plan – layout overview full view">
+      <div class="caption">Floor plan – layout overview</div>
+    </div>
+  </div>
 </body>
 </html>
