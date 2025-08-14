@@ -2,146 +2,113 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Charming family townhouse for rent in Curepipe, Mauritius. Fully equipped, private, and perfect for long or short stays." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Charming family townhouse for rent in Curepipe, Mauritius. Fully equipped, private, and perfect for longer stays." />
   <title>Townhouse Rental in Curepipe, Mauritius</title>
   <style>
     :root {
       --primary-color: #2d5c88;
       --accent-color: #4e8ccf;
       --light-bg: #f8fafc;
-      --soft-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --soft-shadow: 0 8px 20px rgba(0,0,0,.08);
+      --card-bg: #fff;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--light-bg);
-      color: #333;
-      line-height: 1.6;
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background: var(--light-bg); color: #333; line-height: 1.6;
     }
+
+    /* Hero */
     header {
-      background: url('https://images.unsplash.com/photo-1560448075-bb80b516b30b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      color: white;
-      text-align: center;
-      padding: 6rem 1rem 4rem;
-      position: relative;
+      background: url('./img/banner_01.png') center/cover no-repeat;
+      position: relative; color: #fff; text-align: center;
+      padding: 7rem 1rem 5rem;
     }
     header::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: 0;
+      content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.35);
     }
-    header h1, header p {
-      position: relative;
-      z-index: 1;
+    header .inner {
+      position: relative; z-index: 1; max-width: 1000px; margin: 0 auto;
     }
-    header h1 {
-      font-size: 2.8rem;
-      margin-bottom: 1rem;
-    }
-    header p {
-      font-size: 1.2rem;
-    }
+    header h1 { margin: 0 0 .75rem; font-size: clamp(2rem, 4vw, 3rem); }
+    header p  { margin: 0; font-size: clamp(1rem, 2.2vw, 1.2rem); opacity: .95; }
+
+    /* Nav */
     nav {
-      background: #ffffffee;
-      backdrop-filter: blur(6px);
-      text-align: center;
-      padding: 1rem 0;
-      box-shadow: var(--soft-shadow);
+      position: sticky; top: 0; z-index: 10;
+      background: #ffffffee; backdrop-filter: blur(6px);
+      box-shadow: var(--soft-shadow); text-align: center; padding: .9rem 1rem;
     }
     nav a {
-      margin: 0 1.2rem;
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.2s;
+      display: inline-block; margin: 0 1rem; text-decoration: none;
+      color: var(--primary-color); font-weight: 600;
     }
-    nav a:hover {
-      color: var(--accent-color);
-    }
+    nav a:hover { color: var(--accent-color); text-decoration: underline; }
+
+    /* Sections */
     section {
-      max-width: 1000px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: var(--soft-shadow);
+      max-width: 1000px; margin: 2rem auto; background: var(--card-bg);
+      border-radius: 12px; padding: 2rem; box-shadow: var(--soft-shadow);
     }
-    h2 {
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      font-size: 1.6rem;
+    h2 { color: var(--primary-color); margin: 0 0 1rem; font-size: 1.6rem; }
+    ul { padding-left: 1.25rem; margin: 0; }
+    li { margin-bottom: .5rem; }
+
+    /* Carousel (CSS scroll-snap) */
+    .carousel {
+      position: relative; overflow: hidden; border-radius: 12px; box-shadow: var(--soft-shadow);
     }
-    ul {
-      padding-left: 1.5rem;
+    .track {
+      display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; gap: 0;
     }
-    ul li {
-      margin-bottom: 0.5rem;
+    .slide {
+      scroll-snap-align: center; flex: 0 0 100%; position: relative;
+      max-height: 65vh; display: flex; align-items: center; justify-content: center;
+      background: #000;
     }
-    .slider {
-      position: relative;
-      max-width: 100%;
-      height: 0;
-      padding-bottom: 56%;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: var(--soft-shadow);
+    .slide img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
-    .slider input {
-      display: none;
+    .carousel-hint {
+      text-align: center; font-size: .9rem; color: #666; margin-top: .5rem;
     }
-    .slides {
-      display: flex;
-      width: 600%;
-      height: 100%;
-      transition: transform 0.5s ease;
+
+    /* Thumb grid */
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: .75rem; margin-top: 1rem;
     }
-    .slides img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      flex-shrink: 0;
+    .thumbs a {
+      display: block; border-radius: 10px; overflow: hidden; box-shadow: var(--soft-shadow);
+      border: 1px solid #eef2f6;
     }
-    .nav-dots {
-      text-align: center;
-      margin-top: 1rem;
+    .thumbs img {
+      width: 100%; height: 120px; object-fit: cover; display: block; transition: transform .25s ease;
     }
-    .nav-dots label {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: #bbb;
-      border-radius: 50%;
-      margin: 0 4px;
-      cursor: pointer;
-    }
-    #slide1:checked ~ .slides { transform: translateX(0%); }
-    #slide2:checked ~ .slides { transform: translateX(-100%); }
-    #slide3:checked ~ .slides { transform: translateX(-200%); }
-    #slide4:checked ~ .slides { transform: translateX(-300%); }
-    #slide5:checked ~ .slides { transform: translateX(-400%); }
-    #slide6:checked ~ .slides { transform: translateX(-500%); }
+    .thumbs a:hover img { transform: scale(1.03); }
+
+    /* Footer */
     footer {
-      text-align: center;
-      font-size: 0.9em;
-      color: #888;
-      padding: 2rem 1rem;
-      background: #e9eef3;
+      text-align: center; font-size: .9rem; color: #888;
+      padding: 2rem 1rem; background: #e9eef3; margin-top: 2rem;
+    }
+
+    /* Small screens */
+    @media (max-width: 600px) {
+      section { margin: 1rem; padding: 1.25rem; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Townhouse Stay in Curepipe</h1>
-    <p>Comfortable, family-friendly rental in the heart of Mauritius</p>
+    <div class="inner">
+      <h1>Townhouse Stay in Curepipe</h1>
+      <p>Comfortable, family-friendly rental in the heart of Mauritius</p>
+    </div>
   </header>
 
   <nav>
@@ -156,60 +123,107 @@
   <section id="about">
     <h2>About the House</h2>
     <p>Located in Forest-Side, Curepipe, this two-floor townhouse is ideal for families and small groups. The area is safe, central, and close to shops, supermarkets, and nature spots like Trou aux Cerfs.</p>
-    <p>The ground floor features a bright, open-plan living, dining, and kitchen space. The first floor includes a full bathroom, a main bedroom, and a semi-private bedroom with a king-size bed – ideal for parents with children.</p>
+    <p>The ground floor features a bright, open-plan living, dining, and kitchen space. The first floor includes a full bathroom, one main bedroom, and a semi-private pass-through room with a king-size bed (separated by a curtain on one side) – ideal for parents with children.</p>
   </section>
 
   <section id="features">
     <h2>Key Features</h2>
     <ul>
-      <li>Sleep up to 5 (king bed, queen + single bunk)</li>
-      <li>Wi-Fi and filtered drinking water</li>
+      <li>Sleeps up to 5 (king bed + queen/single bunk)</li>
+      <li>Reliable Wi-Fi and filtered drinking water</li>
       <li>Dehumidifier, water pump, and gas stove</li>
-      <li>Washing machine, baby gates, and high chair</li>
-      <li>Secure expanda gate and parking next to the house</li>
-      <li>Access to rooftop (currently unfurnished)</li>
+      <li>Washing machine; baby gates & high chair on request</li>
+      <li>Secure expanda gate; parking next to the house</li>
+      <li>Roof access (currently unfurnished)</li>
       <li>Fully equipped kitchen with cooking essentials</li>
     </ul>
   </section>
 
   <section id="photos">
-    <h2>Photo Gallery</h2>
-    <div class="slider">
-      <input type="radio" name="slider" id="slide1" checked>
-      <input type="radio" name="slider" id="slide2">
-      <input type="radio" name="slider" id="slide3">
-      <input type="radio" name="slider" id="slide4">
-      <input type="radio" name="slider" id="slide5">
-      <input type="radio" name="slider" id="slide6">
+    <h2>Photos</h2>
 
-      <div class="slides">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="Living Room">
-        <img src="https://images.unsplash.com/photo-1615874959474-d609969a7b0d?auto=format&fit=crop&w=1200&q=80" alt="Kitchen">
-        <img src="https://images.unsplash.com/photo-1600585152888-66b8972ea0c2?auto=format&fit=crop&w=1200&q=80" alt="Bedroom">
-        <img src="https://images.unsplash.com/photo-1560448075-bb80b516b30b?auto=format&fit=crop&w=1200&q=80" alt="Bathroom">
-        <img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=80" alt="Roof View">
-        <img src="https://images.unsplash.com/photo-1600585152486-586f7dc8a46e?auto=format&fit=crop&w=1200&q=80" alt="Exterior">
+    <!-- Carousel -->
+    <div class="carousel">
+      <div class="track">
+        <figure class="slide">
+          <img src="./img/living_01.jpg" alt="Living room – cosy seating area">
+        </figure>
+        <figure class="slide">
+          <img src="./img/living_02.jpg" alt="Living room – bright open plan">
+        </figure>
+        <figure class="slide">
+          <img src="./img/living_03.jpg" alt="Living room – view to dining">
+        </figure>
+        <figure class="slide">
+          <img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped">
+        </figure>
+        <figure class="slide">
+          <img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter">
+        </figure>
+        <figure class="slide">
+          <img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup">
+        </figure>
+        <figure class="slide">
+          <img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area">
+        </figure>
+        <figure class="slide">
+          <img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin">
+        </figure>
+        <figure class="slide">
+          <img src="./img/toilet_01.jpg" alt="Separate toilet">
+        </figure>
+        <figure class="slide">
+          <img src="./img/hallway_01.jpg" alt="Hallway – upstairs">
+        </figure>
+        <figure class="slide">
+          <img src="./img/roof_01.jpg" alt="Roof access – current view">
+        </figure>
+        <figure class="slide">
+          <img src="./img/detail_01.jpg" alt="Detail – interior touch">
+        </figure>
+        <figure class="slide">
+          <img src="./img/detail_02.jpg" alt="Detail – decor">
+        </figure>
+        <figure class="slide">
+          <img src="./img/detail_03.jpg" alt="Detail – furnishing">
+        </figure>
+        <figure class="slide">
+          <img src="./img/floor_plan.png" alt="Floor plan – layout overview">
+        </figure>
       </div>
+    </div>
+    <p class="carousel-hint">Tip: swipe/drag horizontally to browse</p>
 
-      <div class="nav-dots">
-        <label for="slide1"></label>
-        <label for="slide2"></label>
-        <label for="slide3"></label>
-        <label for="slide4"></label>
-        <label for="slide5"></label>
-        <label for="slide6"></label>
-      </div>
+    <!-- Thumbnails -->
+    <div class="thumbs" aria-label="Photo thumbnails">
+      <a href="#photos"><img src="./img/living_01.jpg" alt="Living room thumbnail"></a>
+      <a href="#photos"><img src="./img/living_02.jpg" alt="Living room thumbnail"></a>
+      <a href="#photos"><img src="./img/living_03.jpg" alt="Living room thumbnail"></a>
+      <a href="#photos"><img src="./img/kitchen_01.jpg" alt="Kitchen thumbnail"></a>
+      <a href="#photos"><img src="./img/kitchen_02.jpg" alt="Kitchen thumbnail"></a>
+      <a href="#photos"><img src="./img/bedroom_01.jpg" alt="Bedroom thumbnail"></a>
+      <a href="#photos"><img src="./img/room_01.jpg" alt="Pass-through room thumbnail"></a>
+      <a href="#photos"><img src="./img/bathroom_01.jpg" alt="Bathroom thumbnail"></a>
+      <a href="#photos"><img src="./img/toilet_01.jpg" alt="Toilet thumbnail"></a>
+      <a href="#photos"><img src="./img/hallway_01.jpg" alt="Hallway thumbnail"></a>
+      <a href="#photos"><img src="./img/roof_01.jpg" alt="Roof thumbnail"></a>
+      <a href="#photos"><img src="./img/detail_01.jpg" alt="Detail thumbnail"></a>
+      <a href="#photos"><img src="./img/detail_02.jpg" alt="Detail thumbnail"></a>
+      <a href="#photos"><img src="./img/detail_03.jpg" alt="Detail thumbnail"></a>
+      <a href="#photos"><img src="./img/floor_plan.png" alt="Floor plan thumbnail"></a>
     </div>
   </section>
 
   <section id="pricing">
     <h2>Pricing & Stay Conditions</h2>
     <ul>
-      <li>Base nightly rate: $50–$70 USD</li>
-      <li>Minimum stay: 7 nights</li>
-      <li>Cleaning fee applies</li>
-      <li>Weekly and monthly discounts available</li>
-      <li>Check-in from 14:00, check-out by 10:00</li>
+      <li>Base nightly rate: Rs 1,700–1,900</li>
+      <li>Weekly: Rs 11,000–12,000</li>
+      <li>Fortnight: Rs 20,000–21,000</li>
+      <li>Monthly: Rs 30,000–32,000 (utilities included) or Rs 26,000–28,000 (+ utilities)</li>
+      <li>Minimum stay: from 5–7 nights (long stays preferred)</li>
+      <li>Cleaning fee applies; cleaning before/after stays (mid-stay on request)</li>
+      <li>Check-in from 14:00; check-out by 10:00</li>
     </ul>
   </section>
 
