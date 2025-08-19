@@ -22,7 +22,7 @@
 
     /* Hero */
     header {
-      background: url('./img/banner_01.png') center/cover no-repeat;
+      background: url('./img/banner_01.png') center bottom / cover no-repeat;
       position: relative; color: #fff; text-align: center;
       padding: 7rem 1rem 5rem;
     }
@@ -81,9 +81,11 @@
     }
     .lightbox img {
       display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain; /* not strictly needed now but safe */
       background: #000;
     }
     .lightbox a.lb-bg {
