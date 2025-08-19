@@ -59,17 +59,9 @@
       -webkit-overflow-scrolling: touch; gap: 0;
     }
     .slide { scroll-snap-align: center; flex: 0 0 100%; max-height: 65vh; background:#000; display:flex; align-items:center; justify-content:center; }
+    .slide a { display: block; width: 100%; height: 100%; }
     .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .carousel-hint { text-align: center; font-size: .9rem; color: #666; margin-top: .5rem; }
-
-    /* Thumbs */
-    .thumbs {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: .75rem; margin-top: 1rem;
-    }
-    .thumbs a { display: block; border-radius: 10px; overflow: hidden; box-shadow: var(--soft-shadow); border: 1px solid #eef2f6; }
-    .thumbs img { width: 100%; height: 120px; object-fit: cover; display: block; transition: transform .25s ease; }
-    .thumbs a:hover img { transform: scale(1.03); }
 
     /* Lightbox (CSS :target) */
     .lightbox {
@@ -79,12 +71,12 @@
     }
     .lightbox:target { display: flex; }
     .lightbox .content {
-      position: relative; max-width: min(92vw, 1000px); max-height: 88vh;
+      position: relative; max-width: 92vw; max-height: 88vh;
       background: #000; border-radius: 10px; box-shadow: 0 12px 30px rgba(0,0,0,.4);
       overflow: hidden;
     }
     .lightbox img {
-      display: block; width: 100%; height: 100%; object-fit: contain; background: #000;
+      display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; background: #000;
     }
     .lightbox a.lb-bg {
       position: fixed; inset: 0; display: block; /* clicking backdrop closes */
@@ -152,43 +144,24 @@
     <!-- Carousel -->
     <div class="carousel" aria-label="Image carousel (swipe/drag)">
       <div class="track">
-        <figure class="slide"><img src="./img/living_01.jpg" alt="Living room – cosy seating area"></figure>
-        <figure class="slide"><img src="./img/living_02.jpg" alt="Living room – bright open plan"></figure>
-        <figure class="slide"><img src="./img/living_03.jpg" alt="Living room – view to dining"></figure>
-        <figure class="slide"><img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped"></figure>
-        <figure class="slide"><img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter"></figure>
-        <figure class="slide"><img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup"></figure>
-        <figure class="slide"><img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area"></figure>
-        <figure class="slide"><img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin"></figure>
-        <figure class="slide"><img src="./img/toilet_01.jpg" alt="Separate toilet"></figure>
-        <figure class="slide"><img src="./img/hallway_01.jpg" alt="Hallway – upstairs"></figure>
-        <figure class="slide"><img src="./img/roof_01.jpg" alt="Roof access – current view"></figure>
-        <figure class="slide"><img src="./img/detail_01.jpg" alt="Detail – interior touch"></figure>
-        <figure class="slide"><img src="./img/detail_02.jpg" alt="Detail – decor"></figure>
-        <figure class="slide"><img src="./img/detail_03.jpg" alt="Detail – furnishing"></figure>
-        <figure class="slide"><img src="./img/floor_plan.png" alt="Floor plan – layout overview"></figure>
+        <figure class="slide"><a href="#lb-living01"><img src="./img/living_01.jpg" alt="Living room – cosy seating area"></a></figure>
+        <figure class="slide"><a href="#lb-living02"><img src="./img/living_02.jpg" alt="Living room – bright open plan"></a></figure>
+        <figure class="slide"><a href="#lb-living03"><img src="./img/living_03.jpg" alt="Living room – view to dining"></a></figure>
+        <figure class="slide"><a href="#lb-kitchen01"><img src="./img/kitchen_01.jpg" alt="Kitchen – fully equipped"></a></figure>
+        <figure class="slide"><a href="#lb-kitchen02"><img src="./img/kitchen_02.jpg" alt="Kitchen – appliances and counter"></a></figure>
+        <figure class="slide"><a href="#lb-bedroom01"><img src="./img/bedroom_01.jpg" alt="Main bedroom – sleeping setup"></a></figure>
+        <figure class="slide"><a href="#lb-room01"><img src="./img/room_01.jpg" alt="Pass-through semi-room – additional sleeping area"></a></figure>
+        <figure class="slide"><a href="#lb-bathroom01"><img src="./img/bathroom_01.jpg" alt="Bathroom – shower and basin"></a></figure>
+        <figure class="slide"><a href="#lb-toilet01"><img src="./img/toilet_01.jpg" alt="Separate toilet"></a></figure>
+        <figure class="slide"><a href="#lb-hallway01"><img src="./img/hallway_01.jpg" alt="Hallway – upstairs"></a></figure>
+        <figure class="slide"><a href="#lb-roof01"><img src="./img/roof_01.jpg" alt="Roof access – current view"></a></figure>
+        <figure class="slide"><a href="#lb-detail01"><img src="./img/detail_01.jpg" alt="Detail – interior touch"></a></figure>
+        <figure class="slide"><a href="#lb-detail02"><img src="./img/detail_02.jpg" alt="Detail – decor"></a></figure>
+        <figure class="slide"><a href="#lb-detail03"><img src="./img/detail_03.jpg" alt="Detail – furnishing"></a></figure>
+        <figure class="slide"><a href="#lb-floorplan"><img src="./img/floor_plan.png" alt="Floor plan – layout overview"></a></figure>
       </div>
     </div>
     <p class="carousel-hint">Tip: swipe/drag horizontally to browse</p>
-
-    <!-- Thumbnails (click to open lightbox modal) -->
-    <div class="thumbs" aria-label="Photo thumbnails">
-      <a href="#lb-living01"><img src="./img/living_01.jpg" alt="Living room thumbnail"></a>
-      <a href="#lb-living02"><img src="./img/living_02.jpg" alt="Living room thumbnail"></a>
-      <a href="#lb-living03"><img src="./img/living_03.jpg" alt="Living room thumbnail"></a>
-      <a href="#lb-kitchen01"><img src="./img/kitchen_01.jpg" alt="Kitchen thumbnail"></a>
-      <a href="#lb-kitchen02"><img src="./img/kitchen_02.jpg" alt="Kitchen thumbnail"></a>
-      <a href="#lb-bedroom01"><img src="./img/bedroom_01.jpg" alt="Bedroom thumbnail"></a>
-      <a href="#lb-room01"><img src="./img/room_01.jpg" alt="Pass-through room thumbnail"></a>
-      <a href="#lb-bathroom01"><img src="./img/bathroom_01.jpg" alt="Bathroom thumbnail"></a>
-      <a href="#lb-toilet01"><img src="./img/toilet_01.jpg" alt="Toilet thumbnail"></a>
-      <a href="#lb-hallway01"><img src="./img/hallway_01.jpg" alt="Hallway thumbnail"></a>
-      <a href="#lb-roof01"><img src="./img/roof_01.jpg" alt="Roof thumbnail"></a>
-      <a href="#lb-detail01"><img src="./img/detail_01.jpg" alt="Detail thumbnail"></a>
-      <a href="#lb-detail02"><img src="./img/detail_02.jpg" alt="Detail thumbnail"></a>
-      <a href="#lb-detail03"><img src="./img/detail_03.jpg" alt="Detail thumbnail"></a>
-      <a href="#lb-floorplan"><img src="./img/floor_plan.png" alt="Floor plan thumbnail"></a>
-    </div>
   </section>
 
   <section id="pricing">
